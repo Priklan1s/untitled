@@ -58,20 +58,36 @@ public class Main {
                 throw new IllegalArgumentException("Имя не должно содержать цифры или специальные символы.");
             }
 
-            System.out.print("Введите возраст: ");
-            int age = Integer.parseInt(scanner.nextLine());
-
-            // Проверка возраста на положительность
-            if (age < 0) {
-                throw new IllegalArgumentException("Возраст не может быть отрицательным числом.");
+            int age = 0;
+            while (true) {
+                try {
+                    System.out.print("Введите возраст: ");
+                    age = Integer.parseInt(scanner.nextLine());
+                    if (age < 0) {
+                        throw new IllegalArgumentException("Возраст не может быть отрицательным числом.");
+                    }
+                    break; // Выход из цикла, если возраст корректен
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: Неверный формат числа. Пожалуйста, введите число.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
             }
 
-            System.out.print("Введите вес: ");
-            double weight = Double.parseDouble(scanner.nextLine());
-
-            // Проверка веса на положительность
-            if (weight < 0) {
-                throw new IllegalArgumentException("Вес не может быть отрицательным числом.");
+            double weight = 0;
+            while (true) {
+                try {
+                    System.out.print("Введите вес: ");
+                    weight = Double.parseDouble(scanner.nextLine());
+                    if (weight < 0) {
+                        throw new IllegalArgumentException("Вес не может быть отрицательным числом.");
+                    }
+                    break; // Выход из цикла, если вес корректен
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: Неверный формат числа. Пожалуйста, введите число.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: " + e.getMessage());
+                }
             }
 
             System.out.print("Введите цвет: ");
@@ -86,8 +102,6 @@ public class Main {
             animals.add(animal);
             System.out.println("Животное добавлено.");
             animal.say();
-        } catch (NumberFormatException e) {
-            System.out.println("Ошибка: Неверный формат числа.");
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка: " + e.getMessage());
         } catch (Exception e) {
