@@ -134,12 +134,5 @@ public class Main {
             System.out.println("Список пуст.");
             return;
         }
-        for (Animal animal : animalList)
-             {
-                 absTable.listAnimal();
-                 System.out.println(animal);
-
-             };
-
     }
 }
