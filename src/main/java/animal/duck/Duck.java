@@ -5,7 +5,7 @@ import animal.base.Animal;
 
 public class Duck extends Animal implements Flying {
     public Duck(String name, int age, double weight, String color) {
-        super(name, age, weight, color);
+        super(name, age, weight, color,null);
     }
 
     @Override

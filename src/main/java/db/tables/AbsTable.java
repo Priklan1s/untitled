@@ -1,7 +1,6 @@
 package db.tables;
 
 import animal.base.Animal;
-import animal.factory.AnimalFactory;
 import db.dbconnector.IDBConnector;
 import db.dbconnector.MySqlConnector;
 
@@ -43,7 +42,7 @@ public abstract class AbsTable {
 
     public void createTable() {
         try {
-            this.idbConnector.execute(String.format("create table %s values (int primary key id, varchar(10) name, int age, int weight, varchar(10) color)", tableName));
+            this.idbConnector.execute(String.format("create table %s (id varchar(45) PRIMARY KEY , name varchar(10) , age int , weight int , color varchar(10), type varchar(10))", tableName));
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -63,7 +62,6 @@ public abstract class AbsTable {
     public ResultSet list( String... predicates) {
 
         String requestPredicates = predicates.length == 0 ? "" : String.format("where %s", String.join("and", predicates));
-
         try {
             return idbConnector.executeQuery(String.format("select * from %s %s", tableName, requestPredicates));
 
@@ -85,8 +83,9 @@ public abstract class AbsTable {
         }
     }
 
-    public void update(Map<String, String> data ,String... predicates){
+    public void update(Map<String, String> data,String id ,String... predicates){
         String predicatesStr = "";
+
 
         if(predicates.length != 0){
             predicatesStr = String.join(" and ",predicates);
@@ -98,7 +97,7 @@ public abstract class AbsTable {
         }
 
         try {
-            idbConnector.execute(String.format("update %s  set %s %s", tableName, String.join(",",columsValuesStr), predicatesStr));
+            idbConnector.execute(String.format("update %s  set %s %s where id = %s", tableName, String.join(",",columsValuesStr), predicatesStr ,id));
         }catch (SQLException ex){
             ex.printStackTrace();
         }

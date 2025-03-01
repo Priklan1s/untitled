@@ -1,5 +1,5 @@
 package animal.enums;
 
 public enum Command {
-    ADD, LIST, EXIT
+    ADD, LIST, EXIT,UPDATE,FILTER
 }

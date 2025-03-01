@@ -1,20 +1,23 @@
 package animal.base;
 
+import java.util.UUID;
+
 public abstract class Animal {
-    private int id;
+    private String id;
     private String name;
     private int age;
     private double weight;
     private String color;
 
-    public Animal(String name, int age, double weight, String color) {
+    public Animal(String name, int age, double weight, String color, String id) {
         this.name = name;
         setAge(age); // Используем сеттер для проверки корректности
         setWeight(weight);
         this.color = color;
+        this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -71,7 +74,7 @@ public abstract class Animal {
     public String toString() {
         return "Привет! меня зовут " + name +
                 ", мне " + age + " " + getFormattedAge() +
-                ", я вешу - " + weight + " кг, мой цвет - " + color;
+                ", я вешу - " + weight + " кг, мой цвет - " + color + "мой ключ =" + id ;
     }
 
     private String getFormattedAge() {

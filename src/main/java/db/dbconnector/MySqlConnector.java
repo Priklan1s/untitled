@@ -13,6 +13,10 @@ public class MySqlConnector implements IDBConnector{
 
     public MySqlConnector(){
         settings = new DbPropertiesReader().read();
+        try {
+            this.getConnect();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);}
     }
 
     private void getConnect() throws SQLException {
@@ -26,7 +30,9 @@ public class MySqlConnector implements IDBConnector{
 
     @Override
     public void execute(String sqlRequest) throws SQLException {
+        System.out.println(sqlRequest);
         statement.execute(sqlRequest);
+
     }
 
     @Override
