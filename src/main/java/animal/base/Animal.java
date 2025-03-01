@@ -1,6 +1,7 @@
 package animal.base;
 
 public abstract class Animal {
+    private int id;
     private String name;
     private int age;
     private double weight;
@@ -12,6 +13,11 @@ public abstract class Animal {
         setWeight(weight);
         this.color = color;
     }
+
+    public int getId() {
+        return id;
+    }
+
 
     public String getName() {
         return name;

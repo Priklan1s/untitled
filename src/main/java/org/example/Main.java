@@ -3,6 +3,10 @@ package org.example;
 import animal.base.Animal;
 import animal.factory.AnimalFactory;
 import animal.enums.Command;
+import dataobj.AnimalObj;
+import db.dbconnector.IDBConnector;
+import db.dbconnector.MySqlConnector;
+import db.tables.AnimalTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +14,15 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        List<Animal> animals = new ArrayList<>();
+      List<Animal> animals = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
+
+
+        IDBConnector idbConnector = new MySqlConnector();
+        AnimalTable absTable = new AnimalTable(idbConnector);
+
+
+
 
         while (true) {
             System.out.print("Введите команду (add/list/exit): ");
@@ -21,13 +32,21 @@ public class Main {
                 Command command = Command.valueOf(commandInput.toUpperCase());
                 switch (command) {
                     case ADD:
-                        addAnimal(animals, scanner);
+                        addAnimal(animals, scanner, absTable);
                         break;
                     case LIST:
-                        listAnimals(animals);
+                        List<AnimalObj>animalList =absTable.listAnimals();
+
+                        for (AnimalObj animal : animalList)
+                        {
+
+                            System.out.println(String.format("Меня зовут %s и мне %d",animal.getName(),animal.getAge()));
+
+                        };
                         break;
                     case EXIT:
                         System.out.println("Выход из программы.");
+                        idbConnector.close();
                         System.exit(0);
                 }
             } catch (IllegalArgumentException e) {
@@ -36,7 +55,7 @@ public class Main {
         }
     }
 
-    private static void addAnimal(List<Animal> animals, Scanner scanner) {
+    private static void addAnimal(List<Animal> animals, Scanner scanner, AnimalTable absTable) {
         String animalType = null;
 
         // Валидация типа животного
@@ -99,7 +118,8 @@ public class Main {
             }
 
             Animal animal = AnimalFactory.create(animalType, name, age, weight, color);
-            animals.add(animal);
+            //animals.add(animal);
+            absTable.createAnimal(animal);
             System.out.println("Животное добавлено.");
             animal.say();
         } catch (IllegalArgumentException e) {
@@ -114,8 +134,12 @@ public class Main {
             System.out.println("Список пуст.");
             return;
         }
-        for (Animal animal : animals) {
-            System.out.println(animal);
-        }
+        for (Animal animal : animalList)
+             {
+                 absTable.listAnimal();
+                 System.out.println(animal);
+
+             };
+
     }
 }
