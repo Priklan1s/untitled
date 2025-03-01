@@ -118,7 +118,7 @@ public class Main {
             }
 
             Animal animal = AnimalFactory.create(animalType, name, age, weight, color);
-            //animals.add(animal);
+            animals.add(animal);
             absTable.createAnimal(animal);
             System.out.println("Животное добавлено.");
             animal.say();
